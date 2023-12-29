@@ -12,6 +12,8 @@
         <module>eureka-server</module>
         <module>eureka-client</module>
         <module>eureka-client-02</module>
+        <module>order-service-8081</module>
+        <module>payment-service-8091</module>
     </modules>
 
     <parent>
@@ -26,15 +28,41 @@
         <mysql.version>8.0.22</mysql.version>
     </properties>
 
+    <!-- 仓库配置 -->
+    <repositories>
+        <!-- 阿里云仓库 -->
+        <!--<repository>
+            <id>alibaba</id>
+            <url>https://maven.aliyun.com/repository/public</url>
+        </repository>-->
+        <!-- Maven中央仓库 -->
+        <repository>
+            <id>central</id>
+            <url>https://repo.maven.apache.org/maven2</url>
+        </repository>
+    </repositories>
+
     <dependencies>
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
+            <version>1.18.30</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-collections4</artifactId>
+            <version>4.4</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
+        </dependency>
+        <!-- yaml 的自动提示 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
         </dependency>
     </dependencies>
 
@@ -49,7 +77,6 @@
                 <!-- import 表示这个依赖项是用来导入依赖版本号的，而不是实际引入依赖，它将会被用于后续子模块-->
                 <scope>import</scope>
             </dependency>
-
             <dependency>
                 <groupId>com.alibaba.cloud</groupId>
                 <artifactId>spring-cloud-alibaba-dependencies</artifactId>
@@ -59,11 +86,25 @@
                 <!-- import 表示这个依赖项是用来导入依赖版本号的，而不是实际引入依赖，它将会被用于后续子模块-->
                 <scope>import</scope>
             </dependency>
-
             <dependency>
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-boot-starter</artifactId>
-                <version>3.5.3.1</version>
+                <version>3.5.5</version>
+            </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-generator</artifactId>
+                <version>3.5.5</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.xiaoymin</groupId>
+                <artifactId>knife4j-openapi3-spring-boot-starter</artifactId>
+                <version>4.3.0</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-freemarker</artifactId>
+                <version>3.2.1</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -73,6 +114,14 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <excludes>
+                        <exclude>
+                            <groupId>org.springframework.boot</groupId>
+                            <artifactId>spring-boot-configuration-processor</artifactId>
+                        </exclude>
+                    </excludes>
+                </configuration>
             </plugin>
         </plugins>
     </build>

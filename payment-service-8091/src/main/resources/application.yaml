@@ -1,0 +1,31 @@
+server:
+  port: 8091
+spring:
+  application:
+    name: payment-service-8091
+  datasource:
+    url: jdbc:mysql://localhost:3306/cloud?useUnicode=true&characterEncoding=utf-8&useSSL=false
+    username: root
+    password: root
+  # spring 官网可以找到这俩项配置但是这里不生效，可能是springboot版本太低，直接手动执行，一般项目也禁止这样创建。
+  sql:
+    init:
+      schema-locations: classpath:script/schema.sql
+      data-locations: classpath:script/data.sql
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: alpha
+  api-docs:
+    path: /v3/api-docs
+  group-configs:
+    - group: 'default'
+      paths-to-match: '/**'
+      packages-to-scan: com.calm.controller
+# knife4j的增强配置，不需要增强可以不配
+knife4j:
+  enable: true
+  setting:
+    language: zh_cn
