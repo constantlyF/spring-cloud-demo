@@ -1,10 +1,8 @@
 package com.calm.dto;
 
-import com.calm.entity.Payment;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.experimental.Accessors;
-import org.springframework.beans.BeanUtils;
 
 import javax.validation.constraints.NotBlank;
 
@@ -24,10 +22,4 @@ public class PaymentDTO {
     @Schema(description = "流水号", requiredMode = Schema.RequiredMode.REQUIRED)
     @NotBlank(message = "serial 为空")
     private String serial;
-
-    public Payment toEntity() {
-        Payment p = new Payment();
-        BeanUtils.copyProperties(this, p);
-        return p;
-    }
 }
