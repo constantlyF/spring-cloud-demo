@@ -73,4 +73,10 @@ public class CommonExceptionAdvice {
         log.error("参数解析失败", e);
         return ResultData.error(e.getMessage());
     }
+
+    @ExceptionHandler({Exception.class})
+    public ResultData<Void> handleAllException(Exception e) {
+        log.error("程序执行异常", e);
+        return ResultData.error("程序内部异常，请联系管理人员!");
+    }
 }

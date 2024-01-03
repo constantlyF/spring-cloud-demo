@@ -4,6 +4,7 @@ import com.calm.enmus.CodeEnums;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
@@ -12,6 +13,7 @@ import java.io.Serializable;
 @Data(staticConstructor = "of")
 @Accessors(chain = true)
 @AllArgsConstructor(staticName = "of")
+@NoArgsConstructor
 public class ResultData<T> implements Serializable {
     private String code;
     private String msg;

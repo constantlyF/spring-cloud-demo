@@ -18,7 +18,7 @@ import org.springframework.web.client.RestTemplate;
 @RequiredArgsConstructor
 @Tag(name = "OrderController-订单")
 public class OrderController {
-    private static RestTemplate restTemplate;
+    private final RestTemplate restTemplate;
 
     @GetMapping("/insertPayment")
     public ResultData insertPayment(PaymentDTO paymentDTO) {
@@ -29,6 +29,6 @@ public class OrderController {
     @GetMapping("/payment/{id}")
     public ResultData selectPaymentById(
             @Parameter(name = "id", description = "主键", required = true) @PathVariable("id") Long id) {
-        return restTemplate.getForObject(ServiceUrl.PAYMENT_SERVICE + "/payment/" + id, ResultData.class, id);
+        return restTemplate.getForObject(ServiceUrl.PAYMENT_SERVICE + "/payment/" + id, ResultData.class);
     }
 }
