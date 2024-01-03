@@ -1,12 +1,34 @@
 server:
-  port: 8081
+  port: 8092
 spring:
   application:
-    name: order-service
+    name: payment-service
   datasource:
-    url: jdbc:mysql://localhost:3306/cloud?useUnicode=true&characterEncoding=utf-8&useSSL=false&&allowPublicKeyRetrieval=true
+    url: jdbc:mysql://localhost:3306/cloud?useUnicode=true&characterEncoding=utf-8&useSSL=false&allowPublicKeyRetrieval=true
     username: root
     password: root
+  # spring 官网可以找到这俩项配置但是这里不生效，可能是springboot版本太低，直接手动执行，一般项目也禁止这样创建。
+  sql:
+    init:
+      schema-locations: classpath:script/schema.sql
+      data-locations: classpath:script/data.sql
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: alpha
+  api-docs:
+    path: /v3/api-docs
+  group-configs:
+    - group: 'default'
+      paths-to-match: '/**'
+      packages-to-scan: com.calm.controller
+# knife4j的增强配置，不需要增强可以不配
+knife4j:
+  enable: true
+  setting:
+    language: zh_cn
 
 eureka:
   client:
@@ -21,7 +43,7 @@ eureka:
       defaultZone: http://eureka-server-8071:8071/eureka,http://eureka-server-8072:8072/eureka,
   instance:
     # 之前我们Status显示的是calmness是我的主机名，我们不想显示主机名可以添加如下配置,这样status就是显示order8081
-    instance-id: order8081
+    instance-id: payment8092
     # 访问路径可以显示IP地址，我们点击order8081，设置为true的时候出现的访问地址是ip，否则为calmness主机名
     prefer-ip-address: true
     # Eureka客户端向服务端发送心跳的时间间隔，单位为秒(默认是30秒)（客户端告诉服务端自己会按照该规则）

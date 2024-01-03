@@ -9,11 +9,13 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <modules>
-        <module>eureka-server</module>
+        <module>eureka-server-8071</module>
+        <module>eureka-server-8072</module>
         <module>eureka-client</module>
         <module>eureka-client-02</module>
         <module>order-service-8081</module>
         <module>payment-service-8091</module>
+        <module>payment-service-8092</module>
         <module>common-service</module>
     </modules>
 

@@ -29,10 +29,8 @@ import javax.validation.Valid;
 @Slf4j
 public class PaymentController {
     private final PaymentService paymentService;
-
     @Value("${server.port}")
     private String serverPort;
-
     @Operation(summary = "insert payment")
     @PostMapping("/insert")
     public ResultData<Integer> insert(@RequestBody @Valid PaymentDTO paymentDTO) {
