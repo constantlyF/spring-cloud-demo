@@ -32,6 +32,7 @@ public class PaymentController {
     private final PaymentService paymentService;
     @Value("${server.port}")
     private String serverPort;
+
     @Operation(summary = "insert payment")
     @PostMapping("/insert")
     public ResultData<Integer> insert(@RequestBody @Valid PaymentDTO paymentDTO) {
@@ -51,6 +52,8 @@ public class PaymentController {
     @GetMapping("/port")
     public ResultData<String> port() throws InterruptedException {
         TimeUnit.SECONDS.sleep(3);
+        // 写一个除数为0的错误
+        int num = 10 / 0;
         return ResultData.success(serverPort);
     }
 }

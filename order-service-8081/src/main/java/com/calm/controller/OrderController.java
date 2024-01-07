@@ -5,6 +5,9 @@ import com.calm.constants.ServiceUrl;
 import com.calm.dto.PaymentDTO;
 import com.calm.service.LoadBalancer;
 import com.calm.service.PaymentFeignService;
+import com.netflix.hystrix.contrib.javanica.annotation.DefaultProperties;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -27,6 +30,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Tag(name = "OrderController-订单")
 @Slf4j
+//@DefaultProperties(defaultFallback = "hystrixPortFallbackMethod")
 public class OrderController {
     private final RestTemplate restTemplate;
     private final DiscoveryClient discoveryClient;
@@ -50,18 +54,44 @@ public class OrderController {
     @GetMapping("port")
     public ResultData getInstances() {
         List<ServiceInstance> instances = discoveryClient.getInstances(ServiceUrl.PAYMENT_SERVICE_NAME);
-        if (CollectionUtils.isNotEmpty(instances)){
+        if (CollectionUtils.isNotEmpty(instances)) {
             ServiceInstance serviceInstance = loadBalancer.instances(instances);
             URI uri = serviceInstance.getUri();
             return restTemplate.getForObject(uri + "/payment/port", ResultData.class);
-        }else{
+        } else {
             return ResultData.success();
         }
     }
 
     @Operation(summary = "feign payment port")
-    @GetMapping("feign/port")
+    @GetMapping("/feign/port")
     public ResultData<String> port() {
-      return paymentFeignService.port();
+        return paymentFeignService.port();
+    }
+
+    @GetMapping("/hystrix/port")
+    // 因为代码每个都定义HystrixCommand的回调方法，代码太多了，所以我们直接定义在controller的类上
+    // @DefaultProperties(defaultFallback = "hystrixPortFallbackMethod") 然后在使用简洁的@HystrixCommand即可
+    @HystrixCommand
+    /*@HystrixCommand(
+            fallbackMethod = "hystrixPortFallbackMethod",
+            commandProperties = {
+                    @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "1500")
+            })*/
+    public ResultData<String> hystrixPort() {
+        return paymentFeignService.port();
+    }
+
+    public ResultData<String> hystrixPortFallbackMethod() {
+        return ResultData.error("我是order-service-8081 hystrixPortFallbackMethod");
+    }
+
+    /**
+     * 上面定义根本不这样定义一般我们都定义在接口中
+     * 最佳实践
+     */
+    @GetMapping("/hystrixImpl/port")
+    public ResultData<String> hystrixImpl() {
+        return paymentFeignService.port();
     }
 }
