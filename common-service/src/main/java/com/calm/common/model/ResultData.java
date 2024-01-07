@@ -27,10 +27,6 @@ public class ResultData<T> implements Serializable {
         return ResultData.of(CodeEnums.SUCCESS.code, CodeEnums.SUCCESS.msg, data);
     }
 
-    public static <T> ResultData<T> success(String msg) {
-        return ResultData.of(CodeEnums.SUCCESS.code, msg, null);
-    }
-
     public static <T> ResultData<T> success() {
         return ResultData.of(CodeEnums.SUCCESS.code, CodeEnums.SUCCESS.msg, null);
     }

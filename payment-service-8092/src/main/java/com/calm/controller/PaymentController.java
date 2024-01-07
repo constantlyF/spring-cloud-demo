@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.concurrent.TimeUnit;
 
 /**
  * <p>
@@ -44,5 +45,12 @@ public class PaymentController {
             @PathVariable("id") Long id) {
         log.info("调用{}", serverPort);
         return ResultData.success(paymentService.selectByPrimaryKey(id));
+    }
+
+    @Operation(summary = "select port")
+    @GetMapping("/port")
+    public ResultData<String> port() throws InterruptedException {
+        TimeUnit.SECONDS.sleep(3);
+        return ResultData.success(serverPort);
     }
 }

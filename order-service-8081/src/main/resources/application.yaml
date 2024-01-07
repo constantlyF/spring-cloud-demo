@@ -29,3 +29,16 @@ eureka:
     # Eureka服务端在收到最后一次心跳之后等待的时间上限，单位为秒(默认是90秒)，超过则剔除（客户端告诉服务端按照此规则等待自己）
     # 必须大于lease-renewal-interval-in-seconds 不然还没注册就被剔除了
     lease-expiration-duration-in-seconds: 15
+
+feign:
+  client:
+    config:
+      default:
+        # 指的是建立连接所用的时间，适用于网络状况正常的情况下,两端连接所用的时间
+        connectTimeout: 5000
+        # 指的是建立连接后从服务器读取到可用资源所用的时间
+        readTimeout: 5000
+logging:
+  level:
+    # feign日志以什么级别监控哪个接口
+    com.calm.service.PaymentFeignService: debug
