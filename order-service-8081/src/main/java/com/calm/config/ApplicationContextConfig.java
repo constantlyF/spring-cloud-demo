@@ -14,7 +14,8 @@ public class ApplicationContextConfig {
      * LoadBalancerClient可以获取eureka-server注册服务的信息，不然RestTemplate仅仅是一个远程调用,无法识别eureka中的服务
      */
     @Bean
-    @LoadBalanced
+    // 自己实现需要注释掉springboot提供的
+    // @LoadBalanced
     public RestTemplate restTemplate() {
         return new RestTemplate();
     }

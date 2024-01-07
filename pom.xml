@@ -34,10 +34,10 @@
     <!-- 仓库配置 -->
     <repositories>
         <!-- 阿里云仓库 -->
-        <!--<repository>
+        <repository>
             <id>alibaba</id>
             <url>https://maven.aliyun.com/repository/public</url>
-        </repository>-->
+        </repository>
         <!-- Maven中央仓库 -->
         <repository>
             <id>central</id>
