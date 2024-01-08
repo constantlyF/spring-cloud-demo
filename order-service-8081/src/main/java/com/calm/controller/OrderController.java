@@ -78,6 +78,7 @@ public class OrderController {
             commandProperties = {
                     @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "1500")
             })*/
+    @Operation(summary = "服务降级通过@HystrixCommand实现")
     public ResultData<String> hystrixPort() {
         return paymentFeignService.port();
     }
@@ -91,6 +92,7 @@ public class OrderController {
      * 最佳实践
      */
     @GetMapping("/hystrixImpl/port")
+    @Operation(summary = "服务降级通过接口或者工厂类实现")
     public ResultData<String> hystrixImpl() {
         return paymentFeignService.port();
     }

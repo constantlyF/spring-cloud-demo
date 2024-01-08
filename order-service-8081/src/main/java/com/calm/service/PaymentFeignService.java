@@ -2,20 +2,19 @@ package com.calm.service;
 
 import com.calm.common.model.ResultData;
 import com.calm.constants.ServiceUrl;
-import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
-import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 import feign.hystrix.FallbackFactory;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 
-//@FeignClient(value = ServiceUrl.PAYMENT_SERVICE_NAME, fallback = PaymentFeignServiceImpl.class)
-@FeignClient(value = ServiceUrl.PAYMENT_SERVICE_NAME, fallbackFactory = PaymentFeignServiceFallbackFactory.class, decode404 = true)
-//@FeignClient(value = ServiceUrl.PAYMENT_SERVICE_NAME, fallbackFactory = PaymentFeignServiceFallbackFactory2.class, decode404 = true)
-//@FeignClient(name = ServiceUrl.PAYMENT_SERVICE_NAME, fallback = PaymentFeignServiceImpl.class)
+/**
+ * 三种写法都可以的
+ */
+//@FeignClient(value = ServiceUrl.PAYMENT_SERVICE_NAME, fallback = PaymentFeignServiceImpl.class, decode404 = true)
+//@FeignClient(value = ServiceUrl.PAYMENT_SERVICE_NAME, fallbackFactory = PaymentFeignServiceFallbackFactory.class, decode404 = true)
+@FeignClient(value = ServiceUrl.PAYMENT_SERVICE_NAME, fallbackFactory = PaymentFeignServiceFallbackFactory2.class, decode404 = true)
 public interface PaymentFeignService {
     /**
      * 其实直接将对应的Controller copy过来去掉方法体和返回值即可
@@ -26,6 +25,7 @@ public interface PaymentFeignService {
 }
 
 /**
+ *
  */
 @Service
 class PaymentFeignServiceImpl implements PaymentFeignService {
