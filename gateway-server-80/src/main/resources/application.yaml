@@ -1,0 +1,32 @@
+server:
+  port: 80
+spring:
+  application:
+    name: cloud-gateway
+  cloud:
+    gateway:
+      # 自定义属性，当为true的时候开启config配置
+      enabled-config: false
+      routes:
+        # id, 路由的ID，没有规则要求唯一，建议配置服务名
+        - id: payment-service01
+          # 匹配服务对应的host:port
+          uri: http://localhost:8091
+          predicates:
+            # 断言，内置了很多Route Predicate工厂，只有断言通过后才会路由
+            - Path=/payment/**
+        # 这定义是否奇怪？难道我服务部署多个还要配置多次？下一节讲解通过微服务名称路由
+        - id: payment-service02
+          uri: http://localhost:8092
+          predicates:
+            - Path=/payment/**
+
+eureka:
+  instance:
+    hostname: gateway-server
+  client:
+    service-url:
+      register-with-eureka: true
+      fetch-registry: true
+      defaultZone: http://eureka-server-8071:8071/eureka
+
