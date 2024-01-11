@@ -18,11 +18,12 @@
     </properties>
 
     <dependencies>
-        <!--spring boot web-->
-        <dependency>
+        <!--Spring Cloud Gateway使用是基于WebFlux与Netty开发的，所以与传统的Servlet方式不同。所以不需要spring boot web
+        否则会报错{@org.springframework.beans.factory.annotation.Qualifier(value=webFluxConversionService)}-->
+        <!--<dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
+        </dependency>-->
         <!--gateway-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>

@@ -44,6 +44,7 @@ public class PaymentController {
     public ResultData<Payment> select(
             @Parameter(name = "id", description = "主键", required = true)
             @PathVariable("id") Long id) {
+
         log.info("调用{}", serverPort);
         return ResultData.success(paymentService.selectByPrimaryKey(id));
     }

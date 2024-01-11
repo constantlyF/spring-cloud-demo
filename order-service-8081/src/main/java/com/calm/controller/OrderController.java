@@ -11,9 +11,11 @@ import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,6 +30,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/order")
 @RequiredArgsConstructor
+//@AllArgsConstructor
 @Tag(name = "OrderController-订单")
 @Slf4j
 //@DefaultProperties(defaultFallback = "hystrixPortFallbackMethod")
@@ -42,6 +45,10 @@ public class OrderController {
         return restTemplate.postForObject(ServiceUrl.PAYMENT_SERVICE + "/payment/insert", paymentDTO, ResultData.class);
     }
 
+    /**
+     *  restTemplate 没有办法识别eureka中的服务名称的，需要在注入bean中添加  @LoadBalanced，
+     *  但是我注释掉了，所以这个接口会报错
+     */
     @Operation(summary = "select(by id)")
     @GetMapping("/payment/{id}")
     public ResultData selectPaymentById(

@@ -27,13 +27,13 @@ public interface PaymentFeignService {
 /**
  *
  */
-@Service
-class PaymentFeignServiceImpl implements PaymentFeignService {
-    @Override
-    public ResultData<String> port() {
-        return ResultData.error(String.format("%s->我是order-service-8081 hystrixPortFallbackMethod", "PaymentFeignServiceImpl"));
-    }
-}
+//@Service
+//class PaymentFeignServiceImpl implements PaymentFeignService {
+//    @Override
+//    public ResultData<String> port() {
+//        return ResultData.error(String.format("%s->我是order-service-8081 hystrixPortFallbackMethod", "PaymentFeignServiceImpl"));
+//    }
+//}
 
 @Service
 @Slf4j

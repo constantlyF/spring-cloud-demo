@@ -1,0 +1,54 @@
+server:
+  port: 80
+spring:
+  application:
+    name: cloud-gateway
+  cloud:
+    gateway:
+      #      # 1.0 gateway hello world 配置
+      #      # 自定义属性，当为true的时候开启config配置
+      #      enabled-config: false
+      #      routes:
+      #        # id, 路由的ID，没有规则要求唯一，建议配置服务名
+      #        - id: payment-service01
+      #          # 匹配服务对应的host:port
+      #          uri: http://localhost:8091
+      #          predicates:
+      #            # 断言，内置了很多Route Predicate工厂，只有断言通过后才会路由，当一个路由匹配就不会继续匹配了
+      #            - Path=/payment/**
+      #        # 这定义是否奇怪？难道我服务部署多个还要配置多次？ 而且测试发现，我第一个路径匹配后根本走不到payment-service02
+      #        # 那我微服务岂不是白搞了，加上服务名可以？ 但是我web还有实现负载均衡？显然不显示，
+      #        # 下一节讲解通过微服务名称路由
+      #        - id: payment-service02
+      #          uri: http://localhost:8092
+      #          predicates:
+      #            - Path=/payment/**
+      # 2.0 动态路由配置
+      discovery:
+        locator:
+          # 开启从注册中心动态创建路由的功能，利用微服务名进行路由
+          enabled: true
+          # 不开启这里eureka的服务名一直是大写
+          lower-case-service-id: true
+      routes:
+        # id, 路由的ID，没有规则要求唯一，建议配置服务名
+        - id: payment-service
+          # 协议为lb，表示启用Gateway的负载均衡功能，PAYMENT-SERVICE为eureka中的服务名
+          # 这里大小写无所谓，我们开启了 lower-case-service-id: true
+          uri: lb://payment-service
+          predicates:
+            # 断言，内置了很多Route Predicate工厂，只有断言通过后才会路由，当一个路由匹配就不会继续匹配了
+            - Path=/payment-service/payment/**
+          filters:
+            # Spring Cloud Gateway 内置了多种路由过滤器, 这将为所有匹配请求的下游请求的查询字符串添加red=blue
+            - AddRequestParameter=red, blue
+
+eureka:
+  instance:
+    hostname: gateway-server
+  client:
+    service-url:
+      register-with-eureka: true
+      fetch-registry: true
+      defaultZone: http://eureka-server-8071:8071/eureka
+
