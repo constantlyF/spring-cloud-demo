@@ -1,0 +1,31 @@
+server:
+  port: 9001
+
+spring:
+  application:
+    # 注册进Eureka服务器的微服务名
+    name: config-server
+  cloud:
+    config:
+      server:
+        git:
+          # GitHub上面的git仓库名字
+          # uri: git@github.com:constantlyF/springcloud-config.git
+          uri: https://github.com/constantlyF/springcloud-config.git
+          # 搜索目录
+          search-paths:
+            - springcloud-config
+          username: constantlyF
+          password: 'tswcbyy123!@#'
+      # 读取分支
+      label: main
+
+eureka:
+  instance:
+    hostname: config-server
+  client:
+    service-url:
+      register-with-eureka: true
+      fetch-registry: true
+      defaultZone: http://eureka-server-8071:8071/eureka
+

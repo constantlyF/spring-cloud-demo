@@ -1,0 +1,32 @@
+server:
+  port: 9002
+
+spring:
+  application:
+    name: config-client
+  cloud:
+    # Config客户端配置
+    config:
+      # 不加这个远程的配置就把本地的覆盖了，这里远程我们调用的是公共的配置，还是覆盖了？？？
+      overrideNone: true
+      # 分支名称
+      label: main
+      # 配置文件名称
+      name: config, config-client
+      # 读取后缀名
+      # 综合起来就是main分支上config-dev.yml
+      profile: dev
+      # 配置中心地址
+      uri: http://localhost:9001
+
+eureka:
+  instance:
+    hostname: config-server
+  client:
+    service-url:
+      register-with-eureka: true
+      fetch-registry: true
+      defaultZone: http://eureka-server-8071:8071/eureka
+
+name: tom
+

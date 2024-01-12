@@ -16,6 +16,8 @@
         <module>payment-service-8092</module>
         <module>common-service</module>
         <module>gateway-server-80</module>
+        <module>config-server-9001</module>
+        <module>config-client-service-9002</module>
     </modules>
 
     <parent>
